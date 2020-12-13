@@ -1,9 +1,14 @@
+import sun.reflect.ReflectionFactory;
+
 import java.io.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
 public class Main {
 
-    public static void main(String[] args) throws CloneNotSupportedException, IOException, ClassNotFoundException {
+    public static void main(String[] args) throws CloneNotSupportedException, IOException, ClassNotFoundException,
+            IllegalAccessException, InvocationTargetException, InstantiationException {
 
         // Oppretter objekt med konstruktør
         var ansatt = new Ansatt();
@@ -21,13 +26,23 @@ public class Main {
                 .writeObject(ansatt);
 
         // Oppretter nytt objekt uten konstruktør (deserialisering)
-        var anne = (Ansatt) new ObjectInputStream(new FileInputStream("ansatt.obj"))
+        var anne = (Ansatt)new ObjectInputStream(new FileInputStream("ansatt.obj"))
                 .readObject();
 
         anne.setNavn("Anne Ananas");
         anne.setAlder(40);
 
-        Arrays.asList(ansatt, per, atle, anne)
+        // "munged" konstruktør, bruker ikke klassens egne konstruktører
+        // Dette eksempelet er ikke avhengig av eksisterende objekter
+        ReflectionFactory rf = ReflectionFactory.getReflectionFactory();
+        Constructor<?> intConstr = rf.newConstructorForSerialization(Ansatt.class);
+
+        var gunnar = (Ansatt)intConstr.newInstance();
+
+        gunnar.setNavn("Gunnar");
+        gunnar.setAlder(23);
+
+        Arrays.asList(ansatt, per, atle, anne, gunnar)
                 .forEach(System.out::println);
 
         System.out.println("\nAntall ganger konstruktører ble brukt: " + Ansatt.antallKjorteKonstruktorer);

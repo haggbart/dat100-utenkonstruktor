@@ -1,5 +1,7 @@
 # dat100-utenkonstruktørr
 
+Eksempler på hvordan objekter kan opprettes uten konstruktør. 
+
 ```
 Standard konstruktør var kjørt
 Ansatt{navn='null', alder=0, hashcode=961}

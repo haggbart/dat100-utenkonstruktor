@@ -1,6 +1,6 @@
 # dat100-utenkonstruktør
 
-Eksempler på hvordan objekter kan opprettes uten konstruktør. 
+Eksempler på hvordan objekter kan opprettes uten konstruktør i java. 
 
 ```java
     public static void main(String[] args) {
@@ -29,10 +29,10 @@ Eksempler på hvordan objekter kan opprettes uten konstruktør.
 
         // "munged" konstruktør, bruker ikke klassens egne konstruktører
         // Dette eksempelet er ikke avhengig av eksisterende objekter
-        ReflectionFactory rf = ReflectionFactory.getReflectionFactory();
-        Constructor<?> intConstr = rf.newConstructorForSerialization(Ansatt.class);
+        var ansattKlasse = ReflectionFactory.getReflectionFactory()
+                .newConstructorForSerialization(Ansatt.class);
 
-        var gunnar = (Ansatt)intConstr.newInstance();
+        var gunnar = (Ansatt)ansattKlasse.newInstance();
 
         gunnar.setNavn("Gunnar");
         gunnar.setAlder(23);

@@ -1,4 +1,4 @@
-# dat100-utenkonstruktørr
+# dat100-utenkonstruktør
 
 Eksempler på hvordan objekter kan opprettes uten konstruktør. 
 
